@@ -3,15 +3,14 @@ package com.oj.servlet;
 import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.oj.service.FileService;
-import com.oj.util.CompileUtil;
+import com.oj.service.ThreadService;
+
 import com.oj.util.ReflectUtil;
-import com.oj.util.ThreadUtil;
 
 import net.sf.json.JSONObject;
 
@@ -51,6 +50,7 @@ public class CompileServlet extends HttpServlet {
 	public void receive(HttpServletRequest request, HttpServletResponse response) throws IOException, InterruptedException {	 	       
 		 JSONObject json=new JSONObject();
 		 json.put("result", "提交成功");	
+         polling(request,response);
 		 response.getWriter().write(json.toString());		 	    
 	}	
 	
@@ -59,12 +59,16 @@ public class CompileServlet extends HttpServlet {
 	
 	public void polling(HttpServletRequest request, HttpServletResponse response) throws IOException, InterruptedException {
 		     String javaCode=request.getParameter("Code");
-		     String userId=request.getParameter("Id");
-		     System.out.println("javaCode   "+request.getParameter("Code"));
+	//	     System.out.println("javaCode   "+request.getParameter("Code"));
+		     String exerciseType="Open";
 		     FileService fileService=new FileService();
-			 File file=fileService.creatFile(javaCode);			 
-			 String s=new ThreadUtil().CompileJavaInThread(file,userId);		
+			 File file=fileService.creatFile(javaCode);	
+			 
+			 ThreadService threadService=new ThreadService();		 
+			 String s=threadService.CompileJavaInThread(file,exerciseType);	
+			 
 			 System.out.println("返回前端信息为:   "+s);
+			 
 			 JSONObject json=new JSONObject();
 			 json.put("result", s);				 
 			 response.getWriter().write(json.toString());

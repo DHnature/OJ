@@ -98,12 +98,12 @@
   //每名用户的每次请求单独设置一个任务号，暂定
   id=100 
   flag=1; //用来判断编译是否完成的标识符
-  ip="http://c96q72.natappfree.cc";
+  ip="http://xdhtdi.natappfree.cc";
   //若编译未完成，每隔2S向服务器发送一次请求
- // var a=setInterval(timer1,2000);
+  //var a=setInterval(timer1,12000);
   function timer1(){
-  var url=ip+"/TestWeb/Compile?method=polling";
-  var json={"Code":editSession.getDocument().$lines+"","Id":id};
+  var url=ip+"/OJ/Compile?method=polling";
+  var json={"Code":editSession.getDocument().getValue()+""};
   	if(flag!=1){
   		$.ajax({
   			   type:'post',
@@ -127,11 +127,9 @@
   	};	
     
 
-  $("#compileCode").click(function(){	
-	  console.log(editSession.getDocument().getAllLines);
-	  alert(editSession.getDocument().getValue());  
-  	url=ip+"/TestWeb/Compile?method=polling";	
-  	var json={"Code":editSession.getDocument().getValue()+"","Id":100};
+  $("#compileCode").click(function(){		
+  	url=ip+"/OJ/Compile?method=polling";	
+  	var json={"Code":editSession.getDocument().getValue()+""};
   	flag=0;
   	$.ajax({
   		   type:'get',

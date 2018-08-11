@@ -10,7 +10,7 @@ public class FileService {
 		//根据类名来命名java文件
 	    String fileName=javaCode.substring(javaCode.indexOf("class"), javaCode.indexOf("{"));
 	    fileName=fileName.replace("class", "").replace(" ", "");
-	    System.out.println(fileName);
+	    System.out.println(fileName);    
 		File file=new File("E://TestCode//"+fileName+".java");
 		try(PrintWriter pw=new PrintWriter(file);) {
 			pw.write(javaCode);

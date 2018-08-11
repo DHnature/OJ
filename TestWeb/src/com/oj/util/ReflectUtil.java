@@ -10,8 +10,7 @@ public class ReflectUtil {
 	
 	public static void invokeMethod(Class clazz,HttpServletRequest request,HttpServletResponse response) {		    
 		String methodName=request.getParameter("method");
-		System.out.println("当前方法为       "+methodName);
-		
+		System.out.println("当前方法为       "+methodName);		
 		if(methodName==null||methodName.isEmpty()) {
 			throw new RuntimeException("输入的方法参数为空!!!");
 			

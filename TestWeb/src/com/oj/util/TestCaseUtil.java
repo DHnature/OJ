@@ -15,7 +15,16 @@ import java.util.HashMap;
 import net.sf.ezmorph.test.ArrayAssertions;
 
 public class TestCaseUtil {
-
+    /**
+     * 
+     * @param type   
+     * @param filename
+     * @param result
+     * @return
+     */
+	
+	 
+	//用于获取测试用例的结果
 	public static String getTestCaseResult(String type, String filename, String result) {
 		Process p;
 		HashMap<ArrayList<String>, ArrayList<String>> hm = new HashMap<>();

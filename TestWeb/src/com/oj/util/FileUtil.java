@@ -1,4 +1,4 @@
-package util;
+package com.oj.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,9 +7,11 @@ import java.io.PrintWriter;
 public class FileUtil {
 
 	public static File creatFile(String javaCode) {
-		//存放的文件命名为(test+时刻).java
-		//File file=new File("E://TestCode//test"+System.currentTimeMillis()+".java");
-		File file=new File("E://TestCode//Test.java");
+		//根据类名来命名java文件
+	    String fileName=javaCode.substring(javaCode.indexOf("class"), javaCode.indexOf("{"));
+	    fileName=fileName.replace("class", "").replace(" ", "");
+	    System.out.println(fileName);
+		File file=new File("E://TestCode//"+fileName+".java");
 		try(PrintWriter pw=new PrintWriter(file);) {
 			pw.write(javaCode);
 			pw.flush();

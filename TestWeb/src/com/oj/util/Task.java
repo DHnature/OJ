@@ -1,4 +1,4 @@
-package util;
+package com.oj.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,8 +22,6 @@ public Task(String filename,String threadId) {
 		StringBuilder sb=new StringBuilder();
 		int totalMemory = (int)Runtime.getRuntime().totalMemory()/1024;//Java 虚拟机中的内存总量,以字节为单位
 		long startTime=System.currentTimeMillis();
-		//获取当前的线程名
-		long threadId = Thread.currentThread().getId();
 		try {	
 			
 			//执行javac命令
@@ -45,9 +43,7 @@ public Task(String filename,String threadId) {
 			    while((temp=br.readLine())!=null) {
 					System.out.println(temp);
 				}
-			} 
-			
-			
+			} 			
 			//执行 java命令,这里需要先进入e盘
 			ProcessBuilder pb=new ProcessBuilder("java", filename.replace(".java", ""));		
 			pb.directory(new File("e:/TestCode/"));
@@ -68,9 +64,13 @@ public Task(String filename,String threadId) {
 				    	sb=sb.append(temp);
 						System.out.println(temp);
 					}
+				    //进行测试
+				    String result=TestCaseUtil.getTestCaseResult("sum", filename,sb.toString().replace(" ", ""));
+	 			    sb.append("\n测试结果为:    "+result);
+				    
 				} 
 			long endTime=System.currentTimeMillis();
-			System.out.println("花费时间为:    "+(endTime-startTime)+"ms");
+			System.out.println("\n花费时间为:    "+(endTime-startTime)+"ms");
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

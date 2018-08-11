@@ -10,9 +10,16 @@
 <button id="btn">点击提交代码</button>
 </body>
 <script>
+
+
 var code='public class Test { public static void main(String[] args) { System.out.println("hello world");}}';
-var myDate = new Date();
-id=Date.getMilliseconds()+Math.random()*1000;
+// var base = new Base64();
+//result = base.encode(code); 
+//alert(result);
+//var myDate = new Date();
+//id=Date.getMilliseconds()+Math.random()*1000;
+
+id=100
 flag=1; //用来判断是否编译完成
 
 var a=setInterval(timer1,2000);
@@ -48,10 +55,11 @@ var json={"javaCode":code,"id":id};
 
 $("#btn").click(function(){	
 	url="http://localhost:8080/TestWeb/Compile?method=receive";	
-	id=Date.getMilliseconds()+Math.random()*1000;
+//	id=Date.getMilliseconds()+Math.random()*1000;
 	var json={"javaCode":code,"Id":id};
 	flag=0;
-//	ReadDemo();
+	alert("test");
+//	alert(result);
 	$.ajax({
 		   type:'get',
 		   url:url,

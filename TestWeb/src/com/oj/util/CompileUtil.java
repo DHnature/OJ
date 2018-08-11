@@ -1,4 +1,4 @@
-package util;
+package com.oj.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,7 +19,7 @@ public class CompileUtil implements Callable<StringBuilder> {
 		//执行javac命令
 		Process p = new ProcessBuilder("javac", "e:TestCode//"+filename).start();	
 		int freeMemory = (int)Runtime.getRuntime().freeMemory()/1024;//Java 虚拟机中的空闲内存量
-		System.out.println("JVM内存占用：     "+(totalMemory-freeMemory ));
+		//System.out.println("JVM内存占用：     "+(totalMemory-freeMemory ));
 		System.out.println("javac返回值为     "+p.waitFor());
 		if(p.waitFor()!=0) {
 		  BufferedReader br=new BufferedReader(new InputStreamReader(p.getErrorStream(),"gbk"));
@@ -51,13 +51,18 @@ public class CompileUtil implements Callable<StringBuilder> {
 					System.out.println(temp);
 				}
 			}
-			else {
-			  System.out.println("输出结果为:     ");
+			else {			    
+			 
+			  System.out.println("测试出口");	
 			  BufferedReader br2=new BufferedReader(new InputStreamReader(p.getInputStream(),"gbk"));
 			    while((temp=br2.readLine())!=null) {
 			    	sb=sb.append(temp);
 					System.out.println(temp);
 				}
+			    //在这里进行测试并将测试结果返回
+			    String result=TestCaseUtil.getTestCaseResult("sum", filename,sb.toString().replace(" ", ""));
+ 			    sb.append("测试结果为:    "+result);
+			    System.out.println("测试结果:"+result);
 			} 
 		long endTime=System.currentTimeMillis();
 		System.out.println("花费时间为:    "+(endTime-startTime)+"ms");
@@ -72,6 +77,11 @@ public class CompileUtil implements Callable<StringBuilder> {
 		
 	return sb;
 }
+    
+    
+    
+    
+    
 
 	@Override
 	public StringBuilder call() throws Exception {

@@ -14,26 +14,26 @@ import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 public class TestTask implements Callable<String> {
-	String type;
+	String taskId;
 	String filename;
 
-	public TestTask(String type, String filename) {
-		this.type = type;
+	public TestTask(String taskId, String filename) {
+		this.taskId = taskId;
 		this.filename = filename;
 	}
 
 	@Override
 	public String call() throws Exception {
 
-		return getTestCaseResult(type, filename);
+		return getTestCaseResult(taskId, filename);
 	}
 
 	// 用于获取测试用例的结果
-	public static String getTestCaseResult(String type, String filename) {
+	public static String getTestCaseResult(String taskId, String filename) {
 		Process p;
 		HashMap<ArrayList<String>, ArrayList<String>> testCaseHm = new HashMap<>();
 		StringBuilder sb = new StringBuilder();
-		int correctRate = 0;
+		double correctRate = 0;
 		int totalTestCase = 1;
 		int correctNum = 0;
 		// 通过e:/TestCode/type.txt的内容来获取测试数据，用HashMap存储
@@ -52,8 +52,10 @@ public class TestTask implements Callable<String> {
 				if (p.waitFor() != 0) {
 					BufferedReader br = new BufferedReader(new InputStreamReader(p.getErrorStream(), "gbk"));
 					while ((temp = br.readLine()) != null) {
+						
 						sb = sb.append(temp);
 						System.out.println(temp);
+						return temp;
 					}
 					br.close();
 
@@ -64,17 +66,17 @@ public class TestTask implements Callable<String> {
 			}
 
 			// 获取测试数据
-			testCaseHm = getTestData(type);
+			testCaseHm = getTestData(taskId);
 			totalTestCase = testCaseHm.size();
 
-			for (ArrayList<String> a : testCaseHm.keySet()) {
+			/*for (ArrayList<String> a : testCaseHm.keySet()) {
 				for (String s : a) {
 					System.out.println("Key: " + a);
 					System.out.println("Value: " + testCaseHm.get(a));
 				}
 
 			}
-
+*/
 			for (ArrayList<String> input : testCaseHm.keySet()) {
 				pb.command("java", filename.replace(".java", ""));
 				p = pb.start();
@@ -110,14 +112,14 @@ public class TestTask implements Callable<String> {
 			e.printStackTrace();
 		}
 		return "\n测试用例数量为:  " + totalTestCase + "\n通过的测试用例个数为:  " + correctNum + "\n正确率为:  "
-				+ (double) (correctNum / totalTestCase)*100 + "%";
+				+  ((double)correctNum / (double)totalTestCase)*100 + "%";
 	}
 
 	// 获取txt中的测试数据，将测试数据类型设定为HashMap
-	public static HashMap<ArrayList<String>, ArrayList<String>> getTestData(String type) {
+	public static HashMap<ArrayList<String>, ArrayList<String>> getTestData(String taskId) {
 		HashMap<ArrayList<String>, ArrayList<String>> hm = new HashMap<>();
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(new File("e:/TestCode/TestCase/" + type + ".txt")));
+			BufferedReader br = new BufferedReader(new FileReader(new File("e:/TestCode/TestCase/" + taskId + ".txt")));
 			String temp;
 			while ((temp = br.readLine()) != null) {
 				String arr[] = temp.split("}");
@@ -145,7 +147,6 @@ public class TestTask implements Callable<String> {
 		for (String s1 : temp) {
 			list.add(s1);
 		}
-
 		return list;
 	}
 

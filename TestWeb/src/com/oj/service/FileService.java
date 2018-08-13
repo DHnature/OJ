@@ -8,6 +8,9 @@ public class FileService {
 
 	public  File creatFile(String javaCode) {
 		//根据类名来命名java文件
+		if(javaCode.indexOf("class")==-1|| javaCode.indexOf("{")==-1) {
+			return null;
+		}
 	    String fileName=javaCode.substring(javaCode.indexOf("class"), javaCode.indexOf("{"));
 	    fileName=fileName.replace("class", "").replace(" ", "");
 	    System.out.println(fileName);    

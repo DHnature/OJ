@@ -2,26 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ACE in Action Java</title>
-    <link rel="stylesheet" type="text/css" href="">
-    <style type="text/css" media="screen">
-        #container{
-            overflow: hidden;
-        }
-        #left{
-          
-            width:720px;
-            height: 760px;
-            float:left;
-        }
-        #right{
-            border: 2px solid black;
-            width:620px;
-            height: 720px;
-            float:right;
-            overflow: auto;
-        }
-    </style>
+    <title>在线编译</title>
+    <link rel="stylesheet" type="text/css" href="css/PostCode.css">
 </head>
 
 <script src="js/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -31,47 +13,38 @@
 <body>
 <div id="container">
 <div id="left" type="text/css"  style="background: #C4E1FF#9D9D9D;">
-<pre id="ace_editor_demo" style="height: 660px;" class=" ace_editor ace-tm">
+<pre id="ace_editor_demo" style="height: 550px;" class=" ace_editor ace-tm">
 <div style="position: absolute;"></div>
 <textarea class="ace_text-input" wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="opacity: 0; font-size: 1px; height: 1px; width: 1px; top: 70px; left: 302px;"></textarea>
 <div class="ace_gutter" aria-hidden="true" style="left: 0px; width: 47px;">
 <div class="ace_layer ace_gutter-layer ace_folding-enabled" style="height: 1e+06px; top: 0px; left: 0px; width: 47px;">
-
 <div class="ace_scroller" style="left: 47px; right: 0px; bottom: 0px;">
-<div class="ace_content" style="top: 0px; left: 0px; width: 720px; height: 620px;">
+<div class="ace_content" style="top: 0px; left: 0px; width: 520px; height: 620px;">
 <div class="ace_layer ace_print-margin-layer">
 <div class="ace_print-margin" style="left: 4px; visibility: visible;"></div></div>
 <div class="ace_layer ace_marker-layer"><div class="ace_active-line" style="height: 14px; top: 56px; left: 0px; right: 0px;"></div></div>
 <div class="ace_layer ace_text-layer" style="height: 1e+06px; margin: 0px 4px; top: 0px; left: 0px;">
-<div class="ace_line" style="height: 14px; top: 0px;"><span class="ace_comment ace_doc">/**</span></div>
-<div class="ace_line" style="height: 14px; top: 14px;"><span class="ace_comment ace_doc"> * In fact, you're looking at ACE right now. Go ahead and play with it!</span></div>
-<div class="ace_line" style="height: 14px; top: 28px;"><span class="ace_comment ace_doc"> *</span></div>
-<div class="ace_line" style="height: 14px; top: 42px;"><span class="ace_comment ace_doc"> * We are currently showing off the JavaScript mode. ACE has support for 45</span></div>
-<div class="ace_line" style="height: 14px; top: 56px;"><span class="ace_comment ace_doc"> * language modes and 24 color themes!</span></div>
-<div class="ace_line" style="height: 14px; top: 70px;"><span class="ace_comment ace_doc"> */</span></div>
 <div class="ace_line" style="height: 14px; top: 84px;"></div>
 <div class="ace_line" style="height: 14px; top: 98px;">
 <div class="ace_line" style="height: 14px; top: 210px;"></div></div>
 <div class="ace_layer ace_marker-layer"></div>
 <div class="ace_layer ace_cursor-layer ace_hidden-cursors">
-<div class="ace_cursor" style="display: block; top: 56px; left: 255px; width: 7px; height: 14px; animation-duration: 1000ms;"></div></div></div></div>
+<div class="ace_cursor" style="display: block; top: 56px; left: 255px; width: 7px; height: 14px; animation-duration: 1000ms;">
+</div></div></div></div>
 <div class="ace_scrollbar ace_scrollbar-v" style="display: none; width: 22px; bottom: 0px;"><div class="ace_scrollbar-inner" style="width: 22px; height: 800px;"></div></div>
 <div class="ace_scrollbar ace_scrollbar-h" style="display: none; height: 22px; left: 47px; right: 0px;">
 <div class="ace_scrollbar-inner" style="height: 600px; width: 600px;"></div></div>
 <div style="height: auto; width: auto; top: 0px; left: 0px; visibility: hidden; position: absolute; white-space: pre; font: inherit; overflow: hidden;">
 <div style="height: auto; width: auto; top: 0px; left: 0px; visibility: hidden; position: absolute; white-space: pre; font: inherit; overflow: visible;"></div>
 <div style="height: auto; width: auto; top: 0px; left: 0px; visibility: hidden; position: absolute; white-space: pre; font-style: inherit; font-variant: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; overflow: visible;"></div></div></pre>
-
-
             <button type="button" onclick="submit()">打印当前代码</button>
             <button type="button" onclick="toProfile()">保存代码至文件</button>
-            <button type="button" id="compileCode" >编译当前代码</button>
-                   
-            
+            <button type="button" id="compileCode" >编译当前代码</button>                         
         </div>
-        <div id="right" style="background: #C4E1FF;">
-            <ul id="mylist"></ul>
-        </div>        
+    
+       <div id="right" >
+            <ul class="event-list"></ul>
+        </div>         
     </div>
     
 </body> 

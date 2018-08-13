@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+  #container{
+            overflow: hidden;
+        }
+        #left{
+          
+            width:620px;
+            height: 760px;
+            float:left;
+        }
+        #right{
+            border: 2px solid black;
+            width:620px;
+            height: 550px;
+            float:right;
+            overflow: auto;
+            
+
+        }
+            .event-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .event-list .event-list-item {
+            line-height: 40px;
+        }
+        .event-list .event-list-item.event-keydown {
+            /*background: #f00;*/
+        }
+        .event-list .event-list-item.event-focus {
+            /*background: #00f;*/
+        }
+        .event-list .event-list-item.change span:nth-child(3) {  
+            background: #97CBFF;
+            color: #fff;
+            padding: 4px;
+            border-radius: 4px;
+        }
+        .event-list .event-list-item.focus span:nth-child(3) {
+            background: #f00;
+            color: #fff;
+            padding: 4px;
+            border-radius: 4px;
+        }
+        .event-list .event-list-item.cursorChange span:nth-child(3) {
+            background: #ADADAD;
+            color: #fff;
+            padding: 4px;
+            border-radius: 4px;
+        }
+        .event-list .event-list-item.selectChange span:nth-child(3) {
+            background: #BE77FF;
+            color: #fff;
+            padding: 4px;
+            border-radius: 4px;
+        }
+        .event-list .event-list-item.copyPaste span:nth-child(3) {
+            background: #02C874;
+            color: #fff;
+            padding: 4px;
+            border-radius: 4px;
+        }
+        .event-list .event-list-item.changeScroll span:nth-child(3) {
+            background: #B87070;
+            color: #fff;
+            padding: 4px;
+            border-radius: 4px;
+        }
+        .event-list .event-list-item.undoRedo span:nth-child(3) {
+            background: #FFAAD5;
+            color: #fff;
+            padding: 4px;
+            border-radius: 4px;
+        }
+        .event-list .event-list-item.getCodes span:nth-child(3) {
+            background: #FFAD86;
+            color: #fff;
+            padding: 4px;
+            border-radius: 4px;
+        }
+        .event-list .event-list-item.compileResult span:nth-child(3) {
+            background: #FFAD86;
+            color: #fff;
+            padding: 4px;
+            border-radius: 4px;
+        }
+        

@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="F:/Coding/Java/Eclipse/workplace/git/TestWeb/WebContent/WEB-INF/lib/ezmorph-1.0.3.jar"/>
 	<classpathentry kind="lib" path="F:/Coding/Java/Eclipse/workplace/git/TestWeb/WebContent/WEB-INF/lib/json-lib-2.1-jdk15.jar"/>
 	<classpathentry kind="lib" path="F:/Coding/Java/Eclipse/workplace/git/TestWeb/WebContent/WEB-INF/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

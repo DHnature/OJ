@@ -2194,6 +2194,10 @@ var TextInput = function(parentNode, host) {
         host.onFocus(e);
         resetSelection();
     });
+    event.addListener(text, "focusOut", function() {
+        isFocused = false;
+        this._emit("focusOut");//why 0813
+    });
     this.focus = function() {
         if (tempStyle) return text.focus();
         text.style.position = "fixed";
@@ -13270,14 +13274,6 @@ Editor.$uid = 0;
         this.renderer.visualizeFocus();
         this._emit("focus", e);
     };
-    this.onFocusOut = function(e) {
-        if (!this.$isFocused)
-            return;
-        this.$isFocused = false;
-        this.renderer.showCursor();
-        this.renderer.visualizeFocus();
-        this._emit("focusOut", e); //@modified why 2018/08/09 19:04
-    };
     this.onBlur = function(e) {
         if (!this.$isFocused)
             return;
@@ -13291,10 +13287,7 @@ Editor.$uid = 0;
         this.renderer.updateCursor();
         this._emit("cursorChange", this.getCursorPosition());  //@modified why 2018/08/08 19:04
     };
-    this.$selection = function() {
-        this.renderer.updateSelectionMarkers();
-        this._emit("selection", this.getSelection());  //@modified why 2018/08/09 19:04
-    };
+    
     this.onDocumentChange = function(delta) {
         var wrap = this.session.$useWrapMode;
         var lastRow = (delta.start.row == delta.end.row ? delta.end.row : Infinity);
@@ -13890,12 +13883,12 @@ Editor.$uid = 0;
         }
     };
     this.toggleCommentLines = function() {
+        this._emit("toggleCommentLines","toggleCommentLines");     //why 0814 15:11
         var state = this.session.getState(this.getCursorPosition().row);
         var rows = this.$getSelectedRows();
         this.session.getMode().toggleCommentLines(state, this.session, rows.first, rows.last);
-        this._emit = ("toggleCommentLines"); //why 0811 failure
     };
-
+    
     this.toggleBlockComment = function() {
         var cursor = this.getCursorPosition();
         var state = this.session.getState(cursor.row);
@@ -14500,6 +14493,10 @@ Editor.$uid = 0;
         this.session.getUndoManager().redo(this.session);
         this.renderer.scrollCursorIntoView(null, 0.5);//why 0811
     };
+    // this.toggleCommentLines = function(){
+    //     this._emit ("toggleCommentLines","toggleCommentLines"); //why 0814 failure
+
+    // }
     this.destroy = function() {
         this.renderer.destroy();
         this._signal("destroy", this);

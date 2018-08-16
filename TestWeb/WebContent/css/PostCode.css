@@ -81,7 +81,13 @@
             border-radius: 4px;
         }
         .event-list .event-list-item.compileResult span:nth-child(3) {
-            background: #FFAD86;
+            background: #FFAAD5;
+            color: #fff;
+            padding: 4px;
+            border-radius: 4px;
+        }
+         .event-list .event-list-item.focusOut span:nth-child(3) {
+            background:	#00EC00;
             color: #fff;
             padding: 4px;
             border-radius: 4px;

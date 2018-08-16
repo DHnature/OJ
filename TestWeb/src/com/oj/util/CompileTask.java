@@ -35,15 +35,16 @@ public class CompileTask implements Callable<String> {
 					sb = sb.append(temp);
 					System.out.println(temp);
 				}
+				br.close();
 				return sb.toString();
 			} else {
-
 				BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream(), "gbk"));
 				while ((temp = br.readLine()) != null) {
 					System.out.println(temp);
 				}
+				br.close();
 			}
-			// 执行 java命令,这里需要先进入e盘
+			// 执行 java命令,这里需要先进入e:/TestCode盘
 			System.out.println("111");
 			ProcessBuilder pb = new ProcessBuilder("java", filename.replace(".java", ""));
 			pb.directory(new File("e:/TestCode/"));
@@ -55,6 +56,7 @@ public class CompileTask implements Callable<String> {
 				while ((temp = br2.readLine()) != null) {
 					sb = sb.append(temp);
 					System.out.println(temp);
+					br2.close();
 				}
 			} else {
 				System.out.println("输出结果为:     ");
@@ -63,6 +65,7 @@ public class CompileTask implements Callable<String> {
 					sb = sb.append(temp);
 					System.out.println(temp);
 				}
+				br2.close();
 			}
 			long endTime = System.currentTimeMillis();
 			System.out.println("\n花费时间为:    " + (endTime - startTime) + "ms");

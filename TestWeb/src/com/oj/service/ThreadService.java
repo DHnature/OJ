@@ -6,10 +6,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
 import com.oj.util.CompileTask;
 import com.oj.util.TestTask;
-
 public class ThreadService {
 	public static ExecutorService pool = Executors.newFixedThreadPool(20);
 
@@ -23,9 +21,12 @@ public class ThreadService {
 	
 	public String CompileJavaInThread(File file, String exerciseType,String taskId) {
         StringBuilder sb=new StringBuilder();
-		if (exerciseType.equals("Standard")) {
+        
+		if (exerciseType.equals("Standard")) {			
 			Callable<String> c = new CompileTask(file.getName());
-			Future f = pool.submit(c);
+			Future<String> f = pool.submit(c);
+			//声明一个接口的变量（接口的引用）可以指向一个实现类（实现该接口的类）的实例，
+			
 			try {
 				sb.append(f.get().toString());
 			} catch (InterruptedException | ExecutionException e) {
@@ -35,7 +36,7 @@ public class ThreadService {
 		}
 
 		Callable<String> c1 = new TestTask(taskId, file.getName());
-		Future f1 = pool.submit(c1);
+		Future<String> f1 = pool.submit(c1);
 		try {
 			return sb.append(f1.get()).toString();
 			

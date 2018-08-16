@@ -1,4 +1,10 @@
-		var i = 1;
+        sid=getCookie("sid");
+        alert(getCookie("sname"))
+        alert(getCookie("sid"))
+        var i = 1;
+        //http://localhost:8080/
+        //7irq5i.natappfree.cc
+        ip = "http://localhost:8080/";
 		var editor = ace.edit("ace_editor_demo");
 		editor.session.setMode("ace/mode/java");
 		editor.setTheme("ace/theme/monokai");
@@ -62,6 +68,20 @@
 					+ ']');
 			i++;
 		});
+        $("*").on("click", function(e){
+            event.stopPropagation();
+            if(e.target.id === "left" ||e.target.id === "right" || e.target.id === "container") {
+                    console.log("focusOut");
+                    add_event(i, 'focusOut', '');
+                    i++;  
+                }
+        });
+        
+		editor.on('autoComplete', function (e) {
+            console.log("autoComplete %o", e);
+            add_event(i, 'autoComplete', e);
+            i++;
+        });
 		
 		var editSession = editor.getSession("editSession");
 		editSession.on('changeScrollTop', function(e) {
@@ -129,31 +149,37 @@
 			} else if (name_ === 'undo' || name_ === 'redo') {
 				$list_li.addClass('undoRedo');
 			}else if (name_ === 'compileResult') {
-				$list_li.addClass('undoRedo');
+				$list_li.addClass('compileResult');
 			}
-		
+			else if (name_ === 'focusOut') {
+				$list_li.addClass('focusOut');
+			}
 			let context_ = '';
 			context_ += '<span class="id">' + id_ + '</span>&nbsp;&nbsp;';
 			context_ += '<span class="time">' + time + '</span>&nbsp;&nbsp;';
 			context_ += '<span class="name">' + name_ + '</span>&nbsp;&nbsp;';
 			context_ += '<span class="content">' + content_ + '</span>';
-		
+			
+			
+			
+		    console.log(context_);
 			let $list_li_content = $(context_);
 			$list_li.append($list_li_content);
 		
 			$('.event-list').append($list_li);
+			console.log($list_li);
 			var div = document.getElementById('right');
 			div.scrollTop = div.scrollHeight;
-		
+			var json={"id_":id_,"time":time,"name_": name_,"content_":content_,"environment":"online","sid":sid};
+		    sendInfo(json);
 			$last_obj = $list_li;
 		};
 		
 		// ******************************************************************
+		//轮询这一块还没有做好，等后面具体需求下来了再做
 		
-		// 每名用户的每次请求单独设置一个任务号，暂定
-		id = 100
-		flag = 1; // 用来判断编译是否完成的标识符
-		ip = "http://7kky2n.natappfree.cc";
+		/*flag = 1; // 用来判断编译是否完成的标识符
+		
 		// 若编译未完成，每隔2S向服务器发送一次请求
 		// var a=setInterval(timer1,12000);
 		function timer1() {
@@ -186,9 +212,10 @@
 				});
 			}
 		};
-		
+		*/
+		// ******************************************************************	
 		$("#compileCode").click(function() {
-			url = ip + "/OJ/Compile?method=polling";
+			var url = ip + "/OJ/Compile?method=polling";
 			var json = {
 				"Code" : editSession.getDocument().getValue() + "",
 				"exerciseType" : "Open",
@@ -209,3 +236,22 @@
 				}
 			});
 		});
+		
+		function sendInfo(json){
+			url = ip + "/OJ/SaveInfoFromWeb";
+			$.ajax({
+				type :'post',
+				url : url,
+				data : json,
+				dataType : 'json',
+				success : function(json) {
+					console.log("success");
+					console.log(json.message);
+				},
+				error : function(json) {
+					console.log("fail");
+				}
+			});
+		}
+		
+		

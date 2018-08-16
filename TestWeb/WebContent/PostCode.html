@@ -9,8 +9,13 @@
 <script src="js/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/ext-language_tools.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.js"></script> 
+<script src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.js"></script>
+<script src="js/cookieUtil.js"></script>
+<script src="js/loginBar.js"></script>
 <body>
+          <div id="loginBar">
+             <iframe height=40 src="loginBarFrame.html" frameborder=0></iframe>
+          </div>
 <div id="container">
 <div id="left" type="text/css"  style="background: #C4E1FF#9D9D9D;">
 <pre id="ace_editor_demo" style="height: 550px;" class=" ace_editor ace-tm">
@@ -37,6 +42,7 @@
 <div style="height: auto; width: auto; top: 0px; left: 0px; visibility: hidden; position: absolute; white-space: pre; font: inherit; overflow: hidden;">
 <div style="height: auto; width: auto; top: 0px; left: 0px; visibility: hidden; position: absolute; white-space: pre; font: inherit; overflow: visible;"></div>
 <div style="height: auto; width: auto; top: 0px; left: 0px; visibility: hidden; position: absolute; white-space: pre; font-style: inherit; font-variant: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; overflow: visible;"></div></div></pre>
+            
             <button type="button" onclick="submit()">打印当前代码</button>
             <button type="button" onclick="toProfile()">保存代码至文件</button>
             <button type="button" id="compileCode" >编译当前代码</button>                         
@@ -48,5 +54,5 @@
     </div>
     
 </body> 
-<script src="js\PostCode.js"></script>
+<script src="js/PostCode.js"></script>
 </html> 

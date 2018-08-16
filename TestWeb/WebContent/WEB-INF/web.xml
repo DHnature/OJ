@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>OJ</display-name>
   <welcome-file-list>
-    <welcome-file>PostCode.html</welcome-file>
+    <welcome-file>login.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>default.html</welcome-file>
@@ -16,5 +16,22 @@
   <servlet-mapping>
     <servlet-name>CompileServlet</servlet-name>
     <url-pattern>/Compile</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SaveInfoFromWebServlet</servlet-name>
+    <servlet-class>com.oj.servlet.SaveInfoFromWebServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SaveInfoFromWebServlet</servlet-name>
+    <url-pattern>/SaveInfoFromWeb</url-pattern>
+  </servlet-mapping> 
+  
+  <servlet>
+    <servlet-name>LogAndRegServlet</servlet-name>
+    <servlet-class>com.oj.servlet.LogAndRegServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogAndRegServlet</servlet-name>
+    <url-pattern>/LogAndReg</url-pattern>
   </servlet-mapping>
 </web-app>

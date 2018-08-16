@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
@@ -28,15 +27,22 @@ public class TestTask implements Callable<String> {
 		return getTestCaseResult(taskId, filename);
 	}
 
-	// 用于获取测试用例的结果
+	/**
+	 * 
+	 * @param taskId
+	 *            任务Id
+	 * @param filename
+	 *            要编译的java文件的文件名
+	 * @return 返回获取测试用例的结果
+	 */
 	public static String getTestCaseResult(String taskId, String filename) {
+
 		Process p;
 		HashMap<ArrayList<String>, ArrayList<String>> testCaseHm = new HashMap<>();
 		StringBuilder sb = new StringBuilder();
-		double correctRate = 0;
+		
 		int totalTestCase = 1;
 		int correctNum = 0;
-		// 通过e:/TestCode/type.txt的内容来获取测试数据，用HashMap存储
 		// 测试数据格式为{(key1):(value1)} {(key2):(value2)} {(key3):(value3)}
 		// 例如 {(100,200):300} {(300,200):500} {(323,412):735} (555,333):888}
 
@@ -44,7 +50,7 @@ public class TestTask implements Callable<String> {
 
 			ProcessBuilder pb = new ProcessBuilder("javac", filename);
 			pb.directory(new File("e:/TestCode/"));
-			
+
 			p = pb.start();
 			// javac操作 *************************************************
 			try {
@@ -52,7 +58,7 @@ public class TestTask implements Callable<String> {
 				if (p.waitFor() != 0) {
 					BufferedReader br = new BufferedReader(new InputStreamReader(p.getErrorStream(), "gbk"));
 					while ((temp = br.readLine()) != null) {
-						
+
 						sb = sb.append(temp);
 						System.out.println(temp);
 						return temp;
@@ -69,20 +75,22 @@ public class TestTask implements Callable<String> {
 			testCaseHm = getTestData(taskId);
 			totalTestCase = testCaseHm.size();
 
-			/*for (ArrayList<String> a : testCaseHm.keySet()) {
-				for (String s : a) {
+			for (ArrayList<String> a : testCaseHm.keySet()) {
 					System.out.println("Key: " + a);
 					System.out.println("Value: " + testCaseHm.get(a));
-				}
+				
 
 			}
-*/
+
 			for (ArrayList<String> input : testCaseHm.keySet()) {
 				pb.command("java", filename.replace(".java", ""));
 				p = pb.start();
-				pb.redirectOutput(Redirect.PIPE);
-				pb.redirectInput(Redirect.PIPE);
-				pb.redirectError(Redirect.PIPE);
+
+				// 这里重定向的作用？？？
+				/*
+				 * pb.redirectOutput(Redirect.PIPE); pb.redirectInput(Redirect.PIPE);
+				 * pb.redirectError(Redirect.PIPE);
+				 */
 				BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
 				// 输入测试用例数据
 				for (String s : input) {
@@ -94,17 +102,17 @@ public class TestTask implements Callable<String> {
 				String temp1;
 				StringBuilder testResult = new StringBuilder();
 				BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream(), "gbk"));
-				
 
 				while ((temp1 = br.readLine()) != null) {
-                       testResult.append(temp1);
+					testResult.append(temp1);
 				}
 				if (testResult.toString().replace(" ", "").equals(testCaseHm.get(input).get(0))) {
 					System.out.println("测试结果:   " + testResult);
 					System.out.println("标准结果          " + testCaseHm.get(input).get(0));
 					correctNum++;
 				}
-				// writer.close();
+				
+				 writer.close();
 			}
 
 		} catch (IOException e) {
@@ -112,19 +120,23 @@ public class TestTask implements Callable<String> {
 			e.printStackTrace();
 		}
 		return "\n测试用例数量为:  " + totalTestCase + "\n通过的测试用例个数为:  " + correctNum + "\n正确率为:  "
-				+  ((double)correctNum / (double)totalTestCase)*100 + "%";
+				+ ((double) correctNum / (double) totalTestCase) * 100 + "%";
 	}
 
-	// 获取txt中的测试数据，将测试数据类型设定为HashMap
+	/**
+	 * 
+	 * @param taskId  任务Id
+	 *          
+	 * @return 返回测试用例中的数据，并将测试数据封装为HashMap
+	 */
 	public static HashMap<ArrayList<String>, ArrayList<String>> getTestData(String taskId) {
 		HashMap<ArrayList<String>, ArrayList<String>> hm = new HashMap<>();
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(new File("e:/TestCode/TestCase/" + taskId + ".txt")));
+		try(BufferedReader br = new BufferedReader(new FileReader(new File("e:/TestCode/TestCase/" + taskId + ".txt")));) {		
 			String temp;
 			while ((temp = br.readLine()) != null) {
 				String arr[] = temp.split("}");
 				for (String s : arr) {
-					
+					System.out.println("s为" + s);
 					hm.put(getTestIO(s.split(":")[0]), getTestIO(s.split(":")[1]));
 				}
 			}
@@ -139,7 +151,12 @@ public class TestTask implements Callable<String> {
 		return hm;
 	}
 
-	// 获取测试数据的输入和输出
+	/**
+	 * 
+	 * @param s
+	 *            解析字符串并获取测试数据的输入和输出，
+	 * @return
+	 */
 	public static ArrayList<String> getTestIO(String s) {
 		s = s.replace("}", "").replace("{", "");
 		String temp[] = s.replace("(", "").replace(")", "").split(",");
